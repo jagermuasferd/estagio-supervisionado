@@ -1,0 +1,2 @@
+### Testar Conexão com o Supabase
+GET http://localhost:8080/api/teste/conexao
