@@ -1,2 +1,29 @@
-### Testar Conexão com o Supabase
-GET http://localhost:8080/api/teste/conexao
+### Relatório de posicionamento das OPs (WIP)
+GET http://localhost:8080/api/relatorios/wip
+
+### Relatório de saldo em estoque acabado
+GET http://localhost:8080/api/relatorios/estoque
+
+### Relatório de qualidade e perdas por parceiro
+GET http://localhost:8080/api/relatorios/qualidade
+
+### Registrar movimentação de OP
+POST http://localhost:8080/api/movimentacoes
+Content-Type: application/json
+
+{
+  "opId": 1,
+  "parceiroId": 1,
+  "tipoMovimentacao": "RETORNO_LAVANDERIA",
+  "numeroNotaRemessa": "NF-0001",
+  "observacoes": "Exemplo de movimentação",
+  "itens": [
+    {
+      "skuId": 1,
+      "qtdEnviada": 100,
+      "qtdAprovada": 95,
+      "qtdRebolado": 3,
+      "qtdSegundaQualidade": 2
+    }
+  ]
+}

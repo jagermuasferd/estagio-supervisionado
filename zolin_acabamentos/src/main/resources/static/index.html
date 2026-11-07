@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Zolin Acabamentos</title>
+  <meta name="description" content="Controle de produção da Zolin Acabamentos: andamento das OPs, estoque, qualidade e movimentações.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Public+Sans:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/config.js"></script>
+</head>
+<body>
+
+<header class="topo">
+  <div class="topo-conteudo">
+    <div class="marca">
+      <span class="marca-nome">Zolin</span>
+      <span class="marca-sub">acabamentos</span>
+    </div>
+    <p class="conexao" id="conexao" role="status" data-estado="aguardando">
+      <span class="ponto" aria-hidden="true"></span>
+      <span id="conexao-texto">Conectando à API</span>
+    </p>
+  </div>
+  <div class="costura" aria-hidden="true"></div>
+  <nav class="abas" role="tablist" aria-label="Seções">
+    <button class="aba" role="tab" id="aba-andamento" aria-controls="painel-andamento" data-vista="andamento">Andamento</button>
+    <button class="aba" role="tab" id="aba-estoque" aria-controls="painel-estoque" data-vista="estoque">Estoque</button>
+    <button class="aba" role="tab" id="aba-qualidade" aria-controls="painel-qualidade" data-vista="qualidade">Qualidade</button>
+    <button class="aba" role="tab" id="aba-movimentacao" aria-controls="painel-movimentacao" data-vista="movimentacao">Registrar movimentação</button>
+  </nav>
+</header>
+
+<main class="conteudo">
+
+  <section class="painel" id="painel-andamento" role="tabpanel" aria-labelledby="aba-andamento" hidden>
+    <div class="painel-cab">
+      <div>
+        <h1>Andamento das ordens de produção</h1>
+        <p class="apoio">Onde cada OP está agora, segundo a última movimentação registrada.</p>
+      </div>
+      <button type="button" class="btn sec" data-atualizar="andamento">Atualizar</button>
+    </div>
+    <div id="corpo-andamento"></div>
+  </section>
+
+  <section class="painel" id="painel-estoque" role="tabpanel" aria-labelledby="aba-estoque" hidden>
+    <div class="painel-cab">
+      <div>
+        <h1>Estoque acabado</h1>
+        <p class="apoio">Saldo disponível para pronta entrega, por referência, cor e tamanho.</p>
+      </div>
+      <button type="button" class="btn sec" data-atualizar="estoque">Atualizar</button>
+    </div>
+    <div id="corpo-estoque"></div>
+  </section>
+
+  <section class="painel" id="painel-qualidade" role="tabpanel" aria-labelledby="aba-qualidade" hidden>
+    <div class="painel-cab">
+      <div>
+        <h1>Qualidade e perdas por parceiro</h1>
+        <p class="apoio">Quanto do que foi enviado voltou aprovado, foi para rebolado ou virou segunda qualidade.</p>
+      </div>
+      <button type="button" class="btn sec" data-atualizar="qualidade">Atualizar</button>
+    </div>
+    <div id="corpo-qualidade"></div>
+  </section>
+
+  <section class="painel" id="painel-movimentacao" role="tabpanel" aria-labelledby="aba-movimentacao" hidden>
+    <div class="painel-cab">
+      <div>
+        <h1>Registrar movimentação</h1>
+        <p class="apoio">Lance a saída ou o retorno de peças de uma OP, com as quantidades de cada SKU.</p>
+      </div>
+    </div>
+
+    <form id="form-mov" class="folha" novalidate>
+      <div class="campos">
+        <div class="campo">
+          <label for="f-op">Ordem de produção</label>
+          <select id="f-op" required><option value="">Carregando…</option></select>
+        </div>
+        <div class="campo">
+          <label for="f-parceiro">Parceiro</label>
+          <select id="f-parceiro"><option value="">Processo interno, sem parceiro</option></select>
+        </div>
+        <div class="campo">
+          <label for="f-tipo">Tipo de movimentação</label>
+          <input id="f-tipo" list="tipos" required autocomplete="off" placeholder="Ex.: RETORNO_LAVANDERIA">
+          <datalist id="tipos"></datalist>
+        </div>
+        <div class="campo">
+          <label for="f-nota">Nota de remessa</label>
+          <input id="f-nota" autocomplete="off" placeholder="Opcional">
+        </div>
+        <div class="campo largo">
+          <label for="f-obs">Observações</label>
+          <textarea id="f-obs" rows="2" placeholder="Opcional"></textarea>
+        </div>
+      </div>
+
+      <fieldset class="itens-grupo">
+        <legend>Itens da movimentação</legend>
+        <div class="itens-cab" aria-hidden="true">
+          <span>Peça (SKU)</span><span>Enviada</span><span>Aprovada</span><span>Rebolado</span><span>2ª qualidade</span><span></span>
+        </div>
+        <div id="itens"></div>
+        <button type="button" class="btn sec" id="add-item">Adicionar item</button>
+      </fieldset>
+
+      <div id="aviso-form" role="status" aria-live="polite"></div>
+
+      <div class="acoes">
+        <button type="submit" class="btn prim" id="enviar">Registrar movimentação</button>
+      </div>
+    </form>
+  </section>
+
+</main>
+
+<script src="js/app.js" defer></script>
+</body>
+</html>
